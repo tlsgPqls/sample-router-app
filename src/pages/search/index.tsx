@@ -3,6 +3,8 @@
 // import { Geist, Geist_Mono } from "next/font/google";
 // import styles from "@/styles/Home.module.css";
 
+import { useRouter } from "next/router";
+
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
 //   subsets: ["latin"],
@@ -20,20 +22,19 @@
 //     </>
 //   );
 // }
-
-import { useRouter } from "next/router";
 import styles from "./index.module.css";
 import { ReactNode } from "react";
 import SearchbarLayout from "@/component/searchbar-layout";
-export default function Home() {
-  // const router = useRouter();
-  // const query = router.query.q;
+
+export default function Page() {
+  const router = useRouter();
+  const query = router.query.q;
   return (
-    <div className={styles.title}>
-      <h1>인덱스 페이지입니다.</h1>
+    <div>
+      <h1>검색어:{query} 페이지입니다</h1>
     </div>
   );
 }
-Home.getLayout = (page: ReactNode) => {
+Page.getLayout = (page: ReactNode) => {
   return <SearchbarLayout>{page}</SearchbarLayout>;
 };
