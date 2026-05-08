@@ -25,12 +25,19 @@ import { useRouter } from "next/router";
 import styles from "./index.module.css";
 import { ReactNode } from "react";
 import SearchbarLayout from "@/component/searchbar-layout";
+import sales from "@/mock/sales.json";
+import SaleItem from "@/component/sale-item";
 export default function Home() {
   // const router = useRouter();
   // const query = router.query.q;
   return (
     <div className={styles.title}>
-      <h1>인덱스 페이지입니다.</h1>
+      <section>
+        <h3>최신 등록 상품</h3>
+        {sales.map((sale) => (
+          <SaleItem key={sale.id} {...sale} />
+        ))}
+      </section>
     </div>
   );
 }
