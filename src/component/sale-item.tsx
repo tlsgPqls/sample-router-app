@@ -10,9 +10,9 @@ export default function SaleItem({
   userName,
   photo,
 }: SaleData) {
-  const imageURL = `https://styangpa.blob.core.windows.net/yangpa/${photo}`;
+  const imageURL = `${process.env.NEXT_PUBLIC_IMAGE_URL}/${photo}`;
   return (
-    <Link href={"/sale/${id}"} className={style.container}>
+    <Link href={`/sale/${id}`} className={style.container}>
       <Image
         src={imageURL}
         alt={`${productName}의 사진`}

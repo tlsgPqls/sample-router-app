@@ -1,37 +1,24 @@
-// import Head from "next/head";
-// import Image from "next/image";
-// import { Geist, Geist_Mono } from "next/font/google";
-// import styles from "@/styles/Home.module.css";
-
 import { useRouter } from "next/router";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
-// export default function Home() {
-//   return (
-//     <>
-//       <h1>Hello Next.js</h1>
-//     </>
-//   );
-// }
 import styles from "./index.module.css";
 import { ReactNode } from "react";
 import SearchbarLayout from "@/component/searchbar-layout";
-
-export default function Page() {
-  const router = useRouter();
-  const query = router.query.q;
+import { GetServerSidePropsContext } from "next";
+import { fetchSales } from "@/util/fetch-sales";
+import { InferGetServerSidePropsType } from "next";
+import SaleItem from "@/component/sale-item";
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const q = context.query.q;
+  const sales = await fetchSales(q as string);
+  return { props: { sales: sales } };
+}
+export default function Page({
+  sales,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <div>
-      <h1>검색어:{query} 페이지입니다</h1>
+      {sales.map((sale) => (
+        <SaleItem key={sale.id} {...sale} />
+      ))}
     </div>
   );
 }
